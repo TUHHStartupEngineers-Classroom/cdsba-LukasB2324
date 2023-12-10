@@ -2,12 +2,72 @@
 title: "Probability Theory"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Assignment 1
+```
+P_S<-0.3
+P_notS<-0.7
 
-This is a `.qmd` file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a \# in front of your text, it will create a top level-header.
+P_T_after_S<-0.2
+P_notT_after_S<-0.8
+P_T_after_notS<-0.6
+P_notT_after_notS<-0.4
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+P_T_and_S<-P_T_after_S*P_S
+P_T_and_S
+P_notT_and_S<-P_notT_after_S*P_S
+P_notT_and_S
+P_T_and_notS<-P_T_after_notS*P_notS
+P_T_and_notS
+P_notT_and_notS<-P_notT_after_notS*P_notS
+P_notT_and_notS
+```
 
-# Text Formatting
+
+# Assignment 2
+```
+P_S_notT_notC<-0.423
+P_T_notS_notC<-0.278
+P_C_notT_notS<-0.1
+
+P_SandT_notSandTandC<-0.073
+P_TandC_notSandTandC<-0.033
+P_SandC_notSandTandC<-0.088
+
+P_SandTandC<-0.005
+  
+## Percentage of customers using ALL three devices
+P_allDevices<-P_SandTandC
+P_allDevices
+
+## Percentage of customers using AT LEAST two devices
+P_atLeastTwoDevices<-P_SandT_notSandTandC+P_TandC_notSandTandC+P_SandC_notSandTandC+P_SandTandC
+P_atLeastTwoDevices
+
+## Percentage of customers using ONLY one device
+P_onlyOneDevice<-P_S_notT_notC+P_T_notS_notC+P_C_notT_notS
+P_onlyOneDevice
+
+## Check total probability (has to be 1)
+P_total<-P_atLeastTwoDevices+P_onlyOneDevice
+P_total
+```
+
+
+# Assignment 3
+```
+P_B_after_A<-0.97
+P_B_after_notA<-0.01
+P_A<-0.04
+
+P_notA<-1-P_A
+
+P_notA_after_B<-(P_B_after_notA*P_notA/(P_B_after_notA*P_notA+P_B_after_A*P_A))
+P_notA_after_B
+
+P_A_after_B<-(P_B_after_A*P_A/(P_B_after_A*P_A+P_B_after_notA*P_notA))
+P_A_after_B
+
+Answer_vect<-c("These results show that in case the alarm is triggered, there is a possibility of about ", round(P_notA_after_B*100,digits=1), "% that the product is flawless and a probability of ", round(P_A_after_B*100,digits=1), "% that the product is faulty.")
+Answer<-paste(Answer_vect,collapse="")
+Answer
+```
