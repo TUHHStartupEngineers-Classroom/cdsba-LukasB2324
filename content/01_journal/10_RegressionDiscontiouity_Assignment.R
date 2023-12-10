@@ -1,0 +1,63 @@
+# Load packages
+library(tidyverse)
+library(dagitty)
+library(ggdag)
+library(MatchIt)
+library(estimatr)
+library(rddensity)
+
+# Load data
+setwd("D:/CausalDataScience/cdsba-LukasB2324/content/01_journal")
+df<-readRDS("Data/coupon.rds")
+
+
+
+#Assignment 1
+c0 <- 60
+bw <- c0 + c(-5/2, 5/2) # half the bandwidth
+
+df_bw_below <- df %>% filter(days_since_last >= bw[1] & days_since_last < c0)
+df_bw_above <- df %>% filter(days_since_last >= c0 & days_since_last <= bw[2])
+
+df_bw <- bind_rows(df_bw_above, df_bw_below)
+dim(df_bw)
+
+model_bw_below <- lm(purchase_after ~ days_since_last, df_bw_below)
+model_bw_above <- lm(purchase_after ~ days_since_last, df_bw_above)
+
+y0 <- predict(model_bw_below, tibble(days_since_last = c0))
+y1 <- predict(model_bw_above, tibble(days_since_last = c0))
+
+late <- y1 - y0
+sprintf("LATE with half the bandwidth: %.2f", late)
+
+
+
+#Assignment 2
+c0 <- 60
+bw <- c0 + c(-5*2, 5*2) # double the bandwidth
+
+df_bw_below <- df %>% filter(days_since_last >= bw[1] & days_since_last < c0)
+df_bw_above <- df %>% filter(days_since_last >= c0 & days_since_last <= bw[2])
+
+df_bw <- bind_rows(df_bw_above, df_bw_below)
+dim(df_bw)
+
+model_bw_below <- lm(purchase_after ~ days_since_last, df_bw_below)
+model_bw_above <- lm(purchase_after ~ days_since_last, df_bw_above)
+
+y0 <- predict(model_bw_below, tibble(days_since_last = c0))
+y1 <- predict(model_bw_above, tibble(days_since_last = c0))
+
+late <- y1 - y0
+sprintf("LATE with double the bandwidth: %.2f", late)
+sprintf("Changing the bandwidth has a noticable influence on the LATE. Especially doubling the bandwidth increases the LATE a lot.")
+
+
+# Assignment 3
+shipping_data<-readRDS("Data/shipping.rds")
+c0=30
+rddd <- rddensity(shipping_data$purchase_amount, c = c0)
+summary(rddd)
+rdd_plot <- rdplotdensity(rddd, shipping_data$purchase_amount, plotN = 1000, xlabel="purchase_amount", ylabel="density")
+sprintf("No, the data of 'purchase_amount' is not suited as a running variable with a cut-off at 30€, because the plot shows a sudden large jump at 30€. As can be seen in the plot, the confidence intervals do not overlap.")
