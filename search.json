@@ -67,7 +67,7 @@
     "href": "content/01_journal/01_probability.html",
     "title": "Probability Theory",
     "section": "",
-    "text": "Note\n\n\n\nYou can delete everything in here and start fresh.\n\n\nThis is a .qmd file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a # in front of your text, it will create a top level-header.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 Text Formatting"
+    "text": "1 Assignment 1\nP_S&lt;-0.3\nP_notS&lt;-0.7\n\nP_T_after_S&lt;-0.2\nP_notT_after_S&lt;-0.8\nP_T_after_notS&lt;-0.6\nP_notT_after_notS&lt;-0.4\n\nP_T_and_S&lt;-P_T_after_S*P_S\nP_T_and_S\nP_notT_and_S&lt;-P_notT_after_S*P_S\nP_notT_and_S\nP_T_and_notS&lt;-P_T_after_notS*P_notS\nP_T_and_notS\nP_notT_and_notS&lt;-P_notT_after_notS*P_notS\nP_notT_and_notS\n\n\n2 Assignment 2\nP_S_notT_notC&lt;-0.423\nP_T_notS_notC&lt;-0.278\nP_C_notT_notS&lt;-0.1\n\nP_SandT_notSandTandC&lt;-0.073\nP_TandC_notSandTandC&lt;-0.033\nP_SandC_notSandTandC&lt;-0.088\n\nP_SandTandC&lt;-0.005\n  \n## Percentage of customers using ALL three devices\nP_allDevices&lt;-P_SandTandC\nP_allDevices\n\n## Percentage of customers using AT LEAST two devices\nP_atLeastTwoDevices&lt;-P_SandT_notSandTandC+P_TandC_notSandTandC+P_SandC_notSandTandC+P_SandTandC\nP_atLeastTwoDevices\n\n## Percentage of customers using ONLY one device\nP_onlyOneDevice&lt;-P_S_notT_notC+P_T_notS_notC+P_C_notT_notS\nP_onlyOneDevice\n\n## Check total probability (has to be 1)\nP_total&lt;-P_atLeastTwoDevices+P_onlyOneDevice\nP_total\n\n\n3 Assignment 3\nP_B_after_A&lt;-0.97\nP_B_after_notA&lt;-0.01\nP_A&lt;-0.04\n\nP_notA&lt;-1-P_A\n\nP_notA_after_B&lt;-(P_B_after_notA*P_notA/(P_B_after_notA*P_notA+P_B_after_A*P_A))\nP_notA_after_B\n\nP_A_after_B&lt;-(P_B_after_A*P_A/(P_B_after_A*P_A+P_B_after_notA*P_notA))\nP_A_after_B\n\nAnswer_vect&lt;-c(\"These results show that in case the alarm is triggered, there is a possibility of about \", round(P_notA_after_B*100,digits=1), \"% that the product is flawless and a probability of \", round(P_A_after_B*100,digits=1), \"% that the product is faulty.\")\nAnswer&lt;-paste(Answer_vect,collapse=\"\")\nAnswer"
   },
   {
     "objectID": "content/01_journal/01_probability.html#header-2",
@@ -103,5 +103,33 @@
     "title": "Probability Theory",
     "section": "2.1 Header 2",
     "text": "2.1 Header 2\n\nHeader 3\n\nHeader 4\n\nHeader 5\n\nHeader 6"
+  },
+  {
+    "objectID": "content/01_journal/01_probability.html#percentage-of-customers-using-all-three-devices",
+    "href": "content/01_journal/01_probability.html#percentage-of-customers-using-all-three-devices",
+    "title": "Probability Theory",
+    "section": "2.1 Percentage of customers using ALL three devices",
+    "text": "2.1 Percentage of customers using ALL three devices\nP_allDevices&lt;-P_SandTandC P_allDevices"
+  },
+  {
+    "objectID": "content/01_journal/01_probability.html#percentage-of-customers-using-at-least-two-devices",
+    "href": "content/01_journal/01_probability.html#percentage-of-customers-using-at-least-two-devices",
+    "title": "Probability Theory",
+    "section": "2.2 Percentage of customers using AT LEAST two devices",
+    "text": "2.2 Percentage of customers using AT LEAST two devices\nP_atLeastTwoDevices&lt;-P_SandT_notSandTandC+P_TandC_notSandTandC+P_SandC_notSandTandC+P_SandTandC P_atLeastTwoDevices"
+  },
+  {
+    "objectID": "content/01_journal/01_probability.html#percentage-of-customers-using-only-one-device",
+    "href": "content/01_journal/01_probability.html#percentage-of-customers-using-only-one-device",
+    "title": "Probability Theory",
+    "section": "2.3 Percentage of customers using ONLY one device",
+    "text": "2.3 Percentage of customers using ONLY one device\nP_onlyOneDevice&lt;-P_S_notT_notC+P_T_notS_notC+P_C_notT_notS P_onlyOneDevice"
+  },
+  {
+    "objectID": "content/01_journal/01_probability.html#check-total-probability-has-to-be-1",
+    "href": "content/01_journal/01_probability.html#check-total-probability-has-to-be-1",
+    "title": "Probability Theory",
+    "section": "2.4 Check total probability (has to be 1)",
+    "text": "2.4 Check total probability (has to be 1)\nP_total&lt;-P_atLeastTwoDevices+P_onlyOneDevice P_total"
   }
 ]
