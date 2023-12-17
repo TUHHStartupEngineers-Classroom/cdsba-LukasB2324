@@ -1,9 +1,14 @@
 # Load data
+library(magrittr)
+library(purrr)
+library(tidyr)
+library(dplyr)
 setwd("D:/CausalDataScience/cdsba-LukasB2324/content/01_journal")
 random_vars<-readRDS("Data/random_vars.rds")
 
 # View data
 View(random_vars)
+glimpse(random_vars)
 
 # Assignment 1
 age_data<-random_vars[,1,drop=TRUE]
@@ -31,15 +36,21 @@ Answer4<-c("The correlation is easier to interpret, because it is dimensionless 
 Answer4
 
 # Assignment 5
-age_dataFrame<-data.frame(age_data)
-income_dataFrame<-data.frame(income_data)
+# age_dataFrame<-data.frame(age_data)
+# income_dataFrame<-data.frame(income_data)
 
-income_upto18<-filter(income_dataFrame,age_dataFrame<=18)
+income_upto18 <- random_vars %>% filter(age %in% 0:18)
+income_upto18 <- income_upto18[,2]
 expected_income_upto18<-mean(income_upto18[,,drop=TRUE])
+expected_income_upto18
 
-income_from18under65<-filter(income_dataFrame,(age_dataFrame>=18)&(age_dataFrame<65))
+income_from18under65 <- random_vars %>% filter(age %in% 18:64) #income_dataFrame %>% filter((age_data>=18)&(age_data<65))
+income_from18under65 <- income_from18under65[,2]
 expect_income_from18under65<-mean(income_from18under65[,,drop=TRUE])
+expect_income_from18under65
 
-income_from65up<-filter(income_dataFrame,age_dataFrame>=65)
+income_from65up <- random_vars %>% filter(age %in% 65:150) #income_dataFrame %>% filter(age_data>=65)
+income_from65up <- income_from65up[,2]
 expected_income_from65up<-mean(income_from65up[,,drop=TRUE])
+expected_income_from65up
 

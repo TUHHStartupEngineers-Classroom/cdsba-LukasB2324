@@ -2,6 +2,56 @@
 title: "Difference-in-Differences"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Load packages
+```{r}
+library(tidyverse)
+library(dagitty)
+library(ggdag)
+library(MatchIt)
+```
+
+# Load data
+```{r}
+setwd("D:/CausalDataScience/cdsba-LukasB2324/content/01_journal")
+hospital_data<-readRDS("Data/hospdd.rds")
+```
+
+
+
+# Assignment 1
+```{r}
+hospital_data_zoom_in  <- hospital_data %>% filter(month %in% 3:4)
+
+before_control <- hospital_data_zoom_in %>%
+  filter(hospital %in% 19:46, month == 3) %>% 
+  pull(satis)
+before_treatment <- hospital_data_zoom_in %>%
+  filter(hospital %in% 1:18, month == 3) %>% 
+  pull(satis)
+mean_before_control <- mean(before_control)
+mean_before_treatment <- mean(before_treatment)
+diff_before <- mean_before_treatment - mean_before_control
+
+after_control <- hospital_data_zoom_in %>%
+  filter(hospital %in% 19:46, month == 4) %>% 
+  pull(satis)
+after_treatment <- hospital_data_zoom_in %>%
+  filter(hospital %in% 1:18, month == 4) %>% 
+  pull(satis)
+mean_after_control <- mean(after_control)
+mean_after_treatment <- mean(after_treatment)
+
+difffter <- mean_after_treatment - mean_after_control
+
+diff_diff <- difffter - diff_before
+sprintf("Estimate of the mean satisfaction for treated hospitals before the treatment: %.2f; Estimate of the mean satisfaction for control hospitals before the treatment: %.2f; Estimate of the mean satisfaction for treated hospitals after the treatment: %.2f; Estimate of the mean satisfaction for control hospitals after the treatment: %.2f; Estimate of the difference-in-differences: %.2f", mean_before_treatment, mean_before_control, mean_after_treatment, mean_after_control, diff_diff)
+```
+
+
+
+# Assignment 2
+```{r}
+lm_hospitals<-lm(satis ~ as.factor(hospital)+frequency+as.factor(month)+procedure, data = hospital_data)
+summary(lm_hospitals)
+sprintf("The estaimate for the average treatment effect is %.2f. It is demanded to include a regressor for each hospital and a regressor for each month. This can be done by 'as.factor(hospital)' and 'as.factor(month)'. Without the command 'as.factor' there would be a regressor 'hospital' and a regressor 'month', but there would not be a regressor for each month and each hospital.", lm_hospitals[["coefficients"]][["procedure"]])
+```

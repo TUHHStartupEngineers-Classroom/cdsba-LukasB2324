@@ -2,6 +2,62 @@
 title: "Regression and Statistical Inference"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Load tidyerse package and data
+```{r}
+library(tidyverse)
+setwd("D:/CausalDataScience/cdsba-LukasB2324/content/01_journal")
+car_prices<-readRDS("Data/car_prices.rds")
+```
+# View data
+```{r}
+View(car_prices)
+```
+
+
+
+# Assignment 1
+```{r}
+dim_car_prices<-dim(car_prices)
+Answer1<-paste(c("The data has ",dim_car_prices[1]," rows and ",dim_car_prices[2]," columns."), collapse="")
+Answer1
+```
+
+
+# Assignment 2
+```{r}
+data_glimpse<-glimpse(car_prices)
+data_glimpse
+data_summary<-summary(car_prices)
+data_summary
+```
+
+Referring to the provided data, numbers have the data type double and strings the data type character. For columns that contain strings, the function summary() only gives their length, class and mode. For columns that contain numbers the function summary() gives a statistical overview including the minimum value, the maximum value, the mean value, the median and quartiles.
+
+
+
+# Assignment 3
+## Fit model and print summary
+```{r}
+lm_mod <- lm(price~., car_prices)
+summary(lm_mod)
+```
+
+
+# Assignment 4
+The enginesize is chosen for a closer look. It is of the type double and can take on values between 61 and 326. It has a positive impact on the price. Changing the value of the enginesize by one results in an increase in price of 125.93 with a standard deviation of 26.54. The result is highly significant with a significance level of 0.001 (***).
+
+
+
+# Assignment 5
+```{r}
+car_prices_expanded<-car_prices %>% mutate(seat_heating=TRUE)
+lm_mod_2<-lm(price~., car_prices_expanded)
+summary(lm_mod_2)
+```
+## Test, if seat_heating having the same value in every row causes the coefficients of the regression to be 'NA'
+```{r}
+car_prices_expanded[2,23]<-FALSE
+lm_mod_3<-lm(price~., car_prices_expanded)
+summary(lm_mod_3)
+```
+For the parameter seat_heating the coefficients of the linear regression are NA. This is caused by seat_heating having the same value in every row. Therefore, it is not possible to determine the influence of the parameter seat_heating on the price. If seat_heating=FALSE is set for one of the rows, the regression renders numerical results for the coefficents instead of NA.

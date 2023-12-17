@@ -62,3 +62,4 @@ simps_cond <- ggplot(customer_sat, aes(x = follow_ups, y = satisfaction, color =
 # Plot both plots
 simps_not_cond
 simps_cond
+

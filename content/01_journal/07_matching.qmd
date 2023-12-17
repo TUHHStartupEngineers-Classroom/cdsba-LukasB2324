@@ -2,6 +2,156 @@
 title: "Matching and Subclassification"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Load packages
+```{r}
+library(tidyverse)
+library(dagitty)
+library(ggdag)
+library(MatchIt)
+```
+# Load data
+```{r}
+setwd("D:/CausalDataScience/cdsba-LukasB2324/content/01_journal")
+Membership_data<-readRDS("Data/Membership.rds")
+```
+
+
+# Assignment 1
+## Plotting the data to check the relationships
+```{r}
+plot_age <- ggplot(Membership_data[,c(1,5)], aes(x = age, y = avg_purch)) +
+  geom_point(alpha = .8) +
+  stat_smooth(method = "lm", se = F)
+
+plot_sex <- ggplot(Membership_data[,c(2,5)], aes(x = sex, y = avg_purch)) +
+  geom_point(alpha = .8) +
+  stat_smooth(method = "lm", se = F)
+
+plot_pre_avg_purch <- ggplot(Membership_data[,c(3,5)], aes(x = pre_avg_purch, y = avg_purch)) +
+  geom_point(alpha = .8) +
+  stat_smooth(method = "lm", se = F)
+
+plot_card <- ggplot(Membership_data[,c(4,5)], aes(x = card, y = avg_purch)) +
+  geom_point(alpha = .8) +
+  stat_smooth(method = "lm", se = F)
+
+plot_age
+plot_sex
+plot_pre_avg_purch
+plot_card
+
+plot_age_pre_avg_purch<- ggplot(Membership_data[,c(1,3)], aes(x = age, y = pre_avg_purch)) +
+  geom_point(alpha = .8) +
+  stat_smooth(method = "lm", se = F)
+
+plot_age_card<- ggplot(Membership_data[,c(1,4)], aes(x = age, y = card)) +
+  geom_point(alpha = .8) +
+  stat_smooth(method = "lm", se = F)
+
+plot_pre_avg_purch_card<- ggplot(Membership_data[,c(3,4)], aes(x = pre_avg_purch, y = card)) +
+  geom_point(alpha = .8) +
+  stat_smooth(method = "lm", se = F)
+
+plot_age_pre_avg_purch
+plot_age_card
+plot_pre_avg_purch_card
+```
+
+## DAG
+```{r}
+dag_model <- 'dag {
+bb="0,0,1,1"
+age [exposure,pos="0.075,0.4"]
+avg_purch [outcome,pos="0.4,0.4"]
+card [pos="0.2,0.2"]
+pre_avg_purch [pos="0.2,0.6"]
+age -> avg_purch
+age -> pre_avg_purch
+pre_avg_purch -> card
+age -> card
+card -> avg_purch
+pre_avg_purch -> avg_purch
+}
+'
+
+ggdag(dag_model) +
+  geom_dag_point() +
+  geom_dag_text() +
+  geom_dag_edges() +
+  #geom_dag_label_repel(aes(label = label)) +
+  theme_dag_blank() +
+  geom_dag_text(colour = "red")
+```
+
+
+# Assignment 2
+```{r}
+lm_2<-lm(avg_purch~card,Membership_data)
+summary(lm_2)
+```
+The naive estimate of the treatment effect is about 25.22.
+
+
+
+# Assignment 3.1
+```{r}
+cem <- matchit(card ~ age + pre_avg_purch, # Coarsened Exact Matching
+               data = Membership_data, 
+               method = 'cem', 
+               estimand = 'ATE')
+summary(cem) # Covariate balance
+
+df_cem <- match.data(cem) # Use matched data
+model_cem <- lm(avg_purch ~ card, data = df_cem, weights = weights) # Estimation
+summary(model_cem)
+```
+After the Coarsened Exact Matching the estimate for the ATE is 15.27.
+
+
+
+# Assignment 3.2
+```{r}
+nn <- matchit(card ~ age + pre_avg_purch, # Nearest-Neighbor Matching
+              data = Membership_data,
+              method = "nearest",
+              distance = "mahalanobis",
+              replace = T)
+summary(nn) # Covariate Balance
+
+df_nn <- match.data(nn) # Use matched data
+model_nn <- lm(avg_purch ~ card, data = df_nn, weights = weights) # Estimation
+summary(model_nn)
+```
+After the Nearest-Neighbor Matching the estimate for the ATE is 14.95.
+
+
+
+# Assignment 3.3
+```{r}
+model_prop <- glm(card ~ age + pre_avg_purch, # (1) Propensity scores
+                  data = Membership_data,
+                  family = binomial(link = "logit"))
+summary(model_prop)
+
+df_aug <- Membership_data %>% mutate(propensity = predict(model_prop, type = "response")) # Add propensities to table
+df_ipw <- df_aug %>% mutate(ipw = (card/propensity) + ((1-card) / (1-propensity))) # Extend data by IPW scores
+df_ipw %>% select(card, age, pre_avg_purch, propensity, ipw) # Look at data with IPW scores
+
+model_ipw <- lm(avg_purch ~ card, # (2) Estimation
+                data = df_ipw, 
+                weights = ipw)
+summary(model_ipw)
+
+ggplot(df_aug, aes(x = propensity)) + # Plot histogram of estimated propensities
+  geom_histogram(alpha = .8, color = "white")
+
+df_ipw %>% # Looking for observations with highest weights
+  select(card, age, pre_avg_purch, propensity, ipw) %>% 
+  arrange(desc(ipw))
+
+model_ipw_trim <- lm(avg_purch ~ card, # Run with high weights excluded
+                     data = df_ipw %>% filter(propensity %>% between(0.15, 0.85)),
+                     weights = ipw)
+summary(model_ipw_trim)
+```
+After the Inverse Probability Weighting the estimate for the ATE is 14.95.

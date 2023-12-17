@@ -2,6 +2,74 @@
 title: "Statistical Concepts"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Load data
+```{r}
+setwd("D:/CausalDataScience/cdsba-LukasB2324/content/01_journal")
+random_vars<-readRDS("Data/random_vars.rds")
+```
+
+
+
+# View data
+```{r}
+View(random_vars)
+glimpse_random_vars<-glimpse(random_vars)
+glimpse_random_vars
+```
+
+
+
+# Assignment 1
+```{r}
+age_data<-random_vars[,1,drop=TRUE]
+income_data<-random_vars[,2,drop=TRUE]
+
+age_expect<-mean(age_data)
+income_expect<-mean(income_data)
+
+age_standardDev<-sd(age_data)
+income_standardDev<-sd(income_data)
+
+age_variance<-age_standardDev^2
+income_variance<-income_standardDev^2
+
+sprintf("Expected value of 'age': %.2f; expected value of 'income': %.2f; standard deviation of 'age': %.2f; standard deviation of 'income': %.2f; variance of 'age': %.2f; variance of 'income': %.2f", age_expect, income_expect, age_standardDev, income_standardDev, age_variance, income_variance)
+```
+
+
+
+# Assignment 2
+It does not make sense to compare the standard deviations of the two variables age and income, because their units do not match. The standard deviation has the unit of the corresponding data. So the unit of age_standardDev is years and the unit of income_standardDev is a currency like Euro or Pound.
+
+
+
+# Assignment 3
+```{r}
+covariance<-cov(age_data,income_data)
+correlation<-cor(age_data,income_data)
+sprintf("Covariance between 'age' and 'income': %.2f; correlation between 'age' and 'income': %.2f", covariance, correlation)
+```
+
+
+
+# Assignment 4
+The correlation is easier to interpret, because it is dimensionless and bound between -1 and 1. The correlation of about 0.55 indicates that the variables of age and income have a certain linear relationship, but it is rather moderate than very strong.
+
+
+
+# Assignment 5
+```{r}
+income_upto18 <- random_vars %>% filter(age %in% 0:18)
+income_upto18 <- income_upto18[,2]
+expected_income_upto18<-mean(income_upto18[,,drop=TRUE])
+
+income_from18under65 <- random_vars %>% filter(age %in% 18:64)
+income_from18under65 <- income_from18under65[,2]
+expect_income_from18under65<-mean(income_from18under65[,,drop=TRUE])
+
+income_from65up <- random_vars %>% filter(age %in% 65:150)
+income_from65up <- income_from65up[,2]
+expected_income_from65up<-mean(income_from65up[,,drop=TRUE])
+
+sprintf("E[income|age <= 18] = %.2f; E[income|age element of [18,65)] = %.2f; E[income|age >= 65] = %.2f", expected_income_upto18, expect_income_from18under65, expected_income_from65up)
+```

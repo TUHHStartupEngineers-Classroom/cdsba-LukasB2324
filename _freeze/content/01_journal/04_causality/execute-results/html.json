@@ -1,0 +1,18 @@
+{
+  "hash": "c220edff5eb56583322fbb3d53d9de23",
+  "result": {
+    "markdown": "---\ntitle: \"Causality\"\n---\n\n\n# The original plot of the spurious correlation\n![](../../assets/img/Scheinkorrelation_Storchenpopulation_Geburtenzahl.jpg)\n\n# The replication\n\n::: {.cell hash='04_causality_cache/html/unnamed-chunk-1_dd65d3cb566b03f3909d7420f0ce29c7'}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n```\n\n::: {.cell-output .cell-output-stderr}\n```\n#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n#> ✔ dplyr     1.1.4     ✔ readr     2.1.4\n#> ✔ forcats   1.0.0     ✔ stringr   1.5.1\n#> ✔ ggplot2   3.4.4     ✔ tibble    3.2.1\n#> ✔ lubridate 1.9.3     ✔ tidyr     1.3.0\n#> ✔ purrr     1.0.2     \n#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n#> ✖ dplyr::filter() masks stats::filter()\n#> ✖ dplyr::lag()    masks stats::lag()\n#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors\n```\n:::\n\n```{.r .cell-code}\ndata_birthrates<-data.frame(births=c(160,158,155,150,140,130,127,113,103,102,96)*1000,stork_pairs=c(67,68,47,52,42,34,32,26,22,19,15),year=c(1966,1965,1967,1968,1969,1970,1971,1972,1973,1974,1975))\n\nggplot(data=data_birthrates,mapping = aes(x=data_birthrates[,1],y=data_birthrates[,2],label=data_birthrates[,3])) +\n  geom_smooth(method='lm', formula= y ~ x, se = F) +\n  geom_point(size=3) +\n  geom_text(hjust=1.2,vjust=0) +\n  scale_color_brewer(type = \"qual\", palette = \"Dark2\") +\n  scale_x_reverse() +\n  labs(x = \"Number of live births in Baden-Württemberg\", y = \"Number of stork pairs in Baden-Württemberg\",\n      title = \"Correlation between the decrease in stork pairs and the decrease in births in Baden-Württemberg\") #labs(x = \"Zahl der Lebendgeborenen in Baden-Württemberg\", y = \"Zahl der Storchenpaare in Baden-Württemberg\", title = \"Korrelation zwischen dem Rückgang der Storchenpopulation und der Abnahme der Geburtenzahl in Baden-Württemberg\") \n```\n\n::: {.cell-output .cell-output-stderr}\n```\n#> Warning: The following aesthetics were dropped during statistical transformation: label\n#> ℹ This can happen when ggplot fails to infer the correct grouping structure in\n#>   the data.\n#> ℹ Did you forget to specify a `group` aesthetic or to convert a numerical\n#>   variable into a factor?\n```\n:::\n\n::: {.cell-output-display}\n![](04_causality_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"../../site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\r\n<script src=\"../../site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\r\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

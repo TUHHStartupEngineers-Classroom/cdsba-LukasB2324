@@ -1,0 +1,14 @@
+{
+  "hash": "158e40d5dbded0195c47f3e79d8305e4",
+  "result": {
+    "markdown": "---\ntitle: \"My Lab Journal\"\nsubtitle: \"Causal Data Science for Business Analytics\"\nauthor: \"Lukas Bunk\"\n---\n\n\n![](assets/logo/TIE_logo.svg){width=80% fig-align=\"center\"}\n\n::: {.cell hash='index_cache/html/unnamed-chunk-1_7c9d392a77ccd4a891c9a07a6fea5a6c'}\n\n```{.r .cell-code}\n#This is a template example for lab journaling. Students in the data science courses at the Institute of #Entrepreneurship will use this template to learn R for business analytics. Students can replace this text as they wish.\n\n# How to use\n\n#1. Accept the assignment and get your own github repo.\n\n#2. Blog/journal what you are doing in R, by editing the `.qmd` files. \n\n#3. See the links page for lots of helpful links on learning R.\n\n#4. Change everything to make it your own.\n\n#5. Make sure to render you website every time before you want to upload changes.\n```\n:::",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
