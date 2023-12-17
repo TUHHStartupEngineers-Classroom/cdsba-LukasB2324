@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Oliver Mork">
+<meta name="author" content="Lukas Bunk">
 
 <title>MyLabJournal - Difference-in-Differences</title>
 <style>
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -63,6 +97,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 </head>
@@ -148,7 +185,16 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#load-packages" id="toc-load-packages" class="nav-link active" data-scroll-target="#load-packages"><span class="header-section-number">1</span> Load packages</a></li>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">2</span> Load data</a></li>
+  <li><a href="#assignment-1" id="toc-assignment-1" class="nav-link" data-scroll-target="#assignment-1"><span class="header-section-number">3</span> Assignment 1</a></li>
+  <li><a href="#assignment-2" id="toc-assignment-2" class="nav-link" data-scroll-target="#assignment-2"><span class="header-section-number">4</span> Assignment 2</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -165,7 +211,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Oliver Mork </p>
+             <p>Lukas Bunk </p>
           </div>
   </div>
     
@@ -176,21 +222,161 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="load-packages" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Load packages</h1>
+<div class="cell" data-hash="08_did_cache/html/unnamed-chunk-1_6a73ed18d79ed8286116ab504d83b63d">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+#&gt; ✔ dplyr     1.1.4     ✔ readr     2.1.4
+#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.1
+#&gt; ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+#&gt; ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+#&gt; ✔ purrr     1.0.2     
+#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+#&gt; ✖ dplyr::filter() masks stats::filter()
+#&gt; ✖ dplyr::lag()    masks stats::lag()
+#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="callout-title-container flex-fill">
-Note
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">library</span>(ggdag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; 
+#&gt; Attache Paket: 'ggdag'
+#&gt; 
+#&gt; Das folgende Objekt ist maskiert 'package:stats':
+#&gt; 
+#&gt;     filter</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(MatchIt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="load-data" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Load data</h1>
+<div class="cell" data-hash="08_did_cache/html/unnamed-chunk-2_a31106d17852711f14e3f575dbaff676">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">setwd</span>(<span class="st">"D:/CausalDataScience/cdsba-LukasB2324/content/01_journal"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>hospital_data<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"Data/hospdd.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="assignment-1" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Assignment 1</h1>
+<div class="cell" data-hash="08_did_cache/html/unnamed-chunk-3_3ea79c82ca2e19e83a938e4ccf296e55">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>hospital_data_zoom_in  <span class="ot">&lt;-</span> hospital_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(month <span class="sc">%in%</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>before_control <span class="ot">&lt;-</span> hospital_data_zoom_in <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">filter</span>(hospital <span class="sc">%in%</span> <span class="dv">19</span><span class="sc">:</span><span class="dv">46</span>, month <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">pull</span>(satis)</span>
+<span id="cb7-6"><a href="#cb7-6"></a>before_treatment <span class="ot">&lt;-</span> hospital_data_zoom_in <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="fu">filter</span>(hospital <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>, month <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">pull</span>(satis)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>mean_before_control <span class="ot">&lt;-</span> <span class="fu">mean</span>(before_control)</span>
+<span id="cb7-10"><a href="#cb7-10"></a>mean_before_treatment <span class="ot">&lt;-</span> <span class="fu">mean</span>(before_treatment)</span>
+<span id="cb7-11"><a href="#cb7-11"></a>diff_before <span class="ot">&lt;-</span> mean_before_treatment <span class="sc">-</span> mean_before_control</span>
+<span id="cb7-12"><a href="#cb7-12"></a></span>
+<span id="cb7-13"><a href="#cb7-13"></a>after_control <span class="ot">&lt;-</span> hospital_data_zoom_in <span class="sc">%&gt;%</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>  <span class="fu">filter</span>(hospital <span class="sc">%in%</span> <span class="dv">19</span><span class="sc">:</span><span class="dv">46</span>, month <span class="sc">==</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-15"><a href="#cb7-15"></a>  <span class="fu">pull</span>(satis)</span>
+<span id="cb7-16"><a href="#cb7-16"></a>after_treatment <span class="ot">&lt;-</span> hospital_data_zoom_in <span class="sc">%&gt;%</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>  <span class="fu">filter</span>(hospital <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>, month <span class="sc">==</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-18"><a href="#cb7-18"></a>  <span class="fu">pull</span>(satis)</span>
+<span id="cb7-19"><a href="#cb7-19"></a>mean_after_control <span class="ot">&lt;-</span> <span class="fu">mean</span>(after_control)</span>
+<span id="cb7-20"><a href="#cb7-20"></a>mean_after_treatment <span class="ot">&lt;-</span> <span class="fu">mean</span>(after_treatment)</span>
+<span id="cb7-21"><a href="#cb7-21"></a></span>
+<span id="cb7-22"><a href="#cb7-22"></a>difffter <span class="ot">&lt;-</span> mean_after_treatment <span class="sc">-</span> mean_after_control</span>
+<span id="cb7-23"><a href="#cb7-23"></a></span>
+<span id="cb7-24"><a href="#cb7-24"></a>diff_diff <span class="ot">&lt;-</span> difffter <span class="sc">-</span> diff_before</span>
+<span id="cb7-25"><a href="#cb7-25"></a><span class="fu">sprintf</span>(<span class="st">"Estimate of the mean satisfaction for treated hospitals before the treatment: %.2f; Estimate of the mean satisfaction for control hospitals before the treatment: %.2f; Estimate of the mean satisfaction for treated hospitals after the treatment: %.2f; Estimate of the mean satisfaction for control hospitals after the treatment: %.2f; Estimate of the difference-in-differences: %.2f"</span>, mean_before_treatment, mean_before_control, mean_after_treatment, mean_after_control, diff_diff)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "Estimate of the mean satisfaction for treated hospitals before the treatment: 3.53; Estimate of the mean satisfaction for control hospitals before the treatment: 3.42; Estimate of the mean satisfaction for treated hospitals after the treatment: 4.34; Estimate of the mean satisfaction for control hospitals after the treatment: 3.40; Estimate of the difference-in-differences: 0.82"</code></pre>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>You can delete everything in here and start fresh.</p>
+</section>
+<section id="assignment-2" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Assignment 2</h1>
+<div class="cell" data-hash="08_did_cache/html/unnamed-chunk-4_7301f25d08e0a727cc1e8a69965aae6f">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>lm_hospitals<span class="ot">&lt;-</span><span class="fu">lm</span>(satis <span class="sc">~</span> <span class="fu">as.factor</span>(hospital)<span class="sc">+</span>frequency<span class="sc">+</span><span class="fu">as.factor</span>(month)<span class="sc">+</span>procedure, <span class="at">data =</span> hospital_data)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">summary</span>(lm_hospitals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = satis ~ as.factor(hospital) + frequency + as.factor(month) + 
+#&gt;     procedure, data = hospital_data)
+#&gt; 
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -3.2699 -0.4604  0.0047  0.4574  4.2569 
+#&gt; 
+#&gt; Coefficients:
+#&gt;                        Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)            3.054807   0.058337  52.365  &lt; 2e-16 ***
+#&gt; as.factor(hospital)2   0.369283   0.077169   4.785 1.74e-06 ***
+#&gt; as.factor(hospital)3   0.531657   0.079065   6.724 1.90e-11 ***
+#&gt; as.factor(hospital)4   0.239008   0.073704   3.243  0.00119 ** 
+#&gt; as.factor(hospital)5  -0.187606   0.073920  -2.538  0.01117 *  
+#&gt; as.factor(hospital)6   0.422811   0.073769   5.732 1.03e-08 ***
+#&gt; as.factor(hospital)7   1.395230   0.071221  19.590  &lt; 2e-16 ***
+#&gt; as.factor(hospital)8   0.073894   0.076056   0.972  0.33130    
+#&gt; as.factor(hospital)9  -1.541417   0.078040 -19.752  &lt; 2e-16 ***
+#&gt; as.factor(hospital)10  1.666597   0.077009  21.642  &lt; 2e-16 ***
+#&gt; as.factor(hospital)11  0.205881   0.076085   2.706  0.00683 ** 
+#&gt; as.factor(hospital)12 -0.088643   0.077981  -1.137  0.25569    
+#&gt; as.factor(hospital)13  0.474560   0.075263   6.305 3.04e-10 ***
+#&gt; as.factor(hospital)14  0.216930   0.079097   2.743  0.00611 ** 
+#&gt; as.factor(hospital)15 -0.180409   0.079223  -2.277  0.02280 *  
+#&gt; as.factor(hospital)16  1.413378   0.076976  18.361  &lt; 2e-16 ***
+#&gt; as.factor(hospital)17  0.394071   0.080363   4.904 9.61e-07 ***
+#&gt; as.factor(hospital)18  0.152851   0.093493   1.635  0.10211    
+#&gt; as.factor(hospital)19 -0.747270   0.080883  -9.239  &lt; 2e-16 ***
+#&gt; as.factor(hospital)20  0.051616   0.078844   0.655  0.51270    
+#&gt; as.factor(hospital)21  1.184714   0.083346  14.214  &lt; 2e-16 ***
+#&gt; as.factor(hospital)22  0.751926   0.082314   9.135  &lt; 2e-16 ***
+#&gt; as.factor(hospital)23  0.671462   0.080992   8.290  &lt; 2e-16 ***
+#&gt; as.factor(hospital)24 -0.341779   0.086468  -3.953 7.80e-05 ***
+#&gt; as.factor(hospital)25  0.606550   0.092573   6.552 6.06e-11 ***
+#&gt; as.factor(hospital)26  0.192880   0.078897   2.445  0.01452 *  
+#&gt; as.factor(hospital)27 -0.407223   0.076356  -5.333 9.94e-08 ***
+#&gt; as.factor(hospital)28  0.673916   0.083503   8.071 8.12e-16 ***
+#&gt; as.factor(hospital)29  0.193398   0.080185   2.412  0.01589 *  
+#&gt; as.factor(hospital)30 -0.173233   0.095038  -1.823  0.06838 .  
+#&gt; as.factor(hospital)31  0.488159   0.078912   6.186 6.50e-10 ***
+#&gt; as.factor(hospital)32 -0.343561   0.079867  -4.302 1.72e-05 ***
+#&gt; as.factor(hospital)33 -0.480461   0.078927  -6.087 1.21e-09 ***
+#&gt; as.factor(hospital)34  0.004954   0.074352   0.067  0.94688    
+#&gt; as.factor(hospital)35  0.354500   0.076347   4.643 3.49e-06 ***
+#&gt; as.factor(hospital)36  2.124121   0.077139  27.536  &lt; 2e-16 ***
+#&gt; as.factor(hospital)37  0.122876   0.092438   1.329  0.18380    
+#&gt; as.factor(hospital)38 -0.077458   0.077954  -0.994  0.32043    
+#&gt; as.factor(hospital)39 -0.041024   0.082086  -0.500  0.61725    
+#&gt; as.factor(hospital)40  1.106449   0.077972  14.190  &lt; 2e-16 ***
+#&gt; as.factor(hospital)41 -0.171741   0.076408  -2.248  0.02463 *  
+#&gt; as.factor(hospital)42  0.856891   0.084825  10.102  &lt; 2e-16 ***
+#&gt; as.factor(hospital)43 -0.782887   0.080896  -9.678  &lt; 2e-16 ***
+#&gt; as.factor(hospital)44 -0.014125   0.090375  -0.156  0.87580    
+#&gt; as.factor(hospital)45 -0.217839   0.076349  -2.853  0.00434 ** 
+#&gt; as.factor(hospital)46  0.066936   0.082066   0.816  0.41473    
+#&gt; frequency              0.053751   0.007477   7.189 7.19e-13 ***
+#&gt; as.factor(month)2     -0.009608   0.029111  -0.330  0.74138    
+#&gt; as.factor(month)3      0.021969   0.029111   0.755  0.45049    
+#&gt; as.factor(month)4     -0.003284   0.032382  -0.101  0.91923    
+#&gt; as.factor(month)5     -0.009403   0.032382  -0.290  0.77154    
+#&gt; as.factor(month)6     -0.003838   0.032382  -0.119  0.90567    
+#&gt; as.factor(month)7     -0.011194   0.032382  -0.346  0.72958    
+#&gt; procedure              0.847988   0.034101  24.867  &lt; 2e-16 ***
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 0.7213 on 7314 degrees of freedom
+#&gt; Multiple R-squared:  0.5365, Adjusted R-squared:  0.5332 
+#&gt; F-statistic: 159.8 on 53 and 7314 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">sprintf</span>(<span class="st">"The estaimate for the average treatment effect is %.2f. It is demanded to include a regressor for each hospital and a regressor for each month. This can be done by 'as.factor(hospital)' and 'as.factor(month)'. Without the command 'as.factor' there would be a regressor 'hospital' and a regressor 'month', but there would not be a regressor for each month and each hospital."</span>, lm_hospitals[[<span class="st">"coefficients"</span>]][[<span class="st">"procedure"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "The estaimate for the average treatment effect is 0.85. It is demanded to include a regressor for each hospital and a regressor for each month. This can be done by 'as.factor(hospital)' and 'as.factor(month)'. Without the command 'as.factor' there would be a regressor 'hospital' and a regressor 'month', but there would not be a regressor for each month and each hospital."</code></pre>
 </div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

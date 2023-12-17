@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Oliver Mork">
+<meta name="author" content="Lukas Bunk">
 
 <title>MyLabJournal - Causality</title>
 <style>
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -43,6 +77,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -63,6 +100,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 </head>
@@ -148,7 +188,14 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#the-original-plot-of-the-spurious-correlation" id="toc-the-original-plot-of-the-spurious-correlation" class="nav-link active" data-scroll-target="#the-original-plot-of-the-spurious-correlation"><span class="header-section-number">1</span> The original plot of the spurious correlation</a></li>
+  <li><a href="#the-replication" id="toc-the-replication" class="nav-link" data-scroll-target="#the-replication"><span class="header-section-number">2</span> The replication</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -165,7 +212,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Oliver Mork </p>
+             <p>Lukas Bunk </p>
           </div>
   </div>
     
@@ -176,21 +223,58 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="the-original-plot-of-the-spurious-correlation" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> The original plot of the spurious correlation</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="../../assets/img/Scheinkorrelation_Storchenpopulation_Geburtenzahl.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="../../assets/img/Scheinkorrelation_Storchenpopulation_Geburtenzahl.jpg" class="img-fluid figure-img"></a></p>
+</figure>
 </div>
-<div class="callout-title-container flex-fill">
-Note
+</section>
+<section id="the-replication" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> The replication</h1>
+<div class="cell" data-hash="04_causality_cache/html/unnamed-chunk-1_dd65d3cb566b03f3909d7420f0ce29c7">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+#&gt; ✔ dplyr     1.1.4     ✔ readr     2.1.4
+#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.1
+#&gt; ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+#&gt; ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+#&gt; ✔ purrr     1.0.2     
+#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+#&gt; ✖ dplyr::filter() masks stats::filter()
+#&gt; ✖ dplyr::lag()    masks stats::lag()
+#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>data_birthrates<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">births=</span><span class="fu">c</span>(<span class="dv">160</span>,<span class="dv">158</span>,<span class="dv">155</span>,<span class="dv">150</span>,<span class="dv">140</span>,<span class="dv">130</span>,<span class="dv">127</span>,<span class="dv">113</span>,<span class="dv">103</span>,<span class="dv">102</span>,<span class="dv">96</span>)<span class="sc">*</span><span class="dv">1000</span>,<span class="at">stork_pairs=</span><span class="fu">c</span>(<span class="dv">67</span>,<span class="dv">68</span>,<span class="dv">47</span>,<span class="dv">52</span>,<span class="dv">42</span>,<span class="dv">34</span>,<span class="dv">32</span>,<span class="dv">26</span>,<span class="dv">22</span>,<span class="dv">19</span>,<span class="dv">15</span>),<span class="at">year=</span><span class="fu">c</span>(<span class="dv">1966</span>,<span class="dv">1965</span>,<span class="dv">1967</span>,<span class="dv">1968</span>,<span class="dv">1969</span>,<span class="dv">1970</span>,<span class="dv">1971</span>,<span class="dv">1972</span>,<span class="dv">1973</span>,<span class="dv">1974</span>,<span class="dv">1975</span>))</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">ggplot</span>(<span class="at">data=</span>data_birthrates,<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>data_birthrates[,<span class="dv">1</span>],<span class="at">y=</span>data_birthrates[,<span class="dv">2</span>],<span class="at">label=</span>data_birthrates[,<span class="dv">3</span>])) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">formula=</span> y <span class="sc">~</span> x, <span class="at">se =</span> F) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="fu">geom_text</span>(<span class="at">hjust=</span><span class="fl">1.2</span>,<span class="at">vjust=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">type =</span> <span class="st">"qual"</span>, <span class="at">palette =</span> <span class="st">"Dark2"</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>  <span class="fu">scale_x_reverse</span>() <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of live births in Baden-Württemberg"</span>, <span class="at">y =</span> <span class="st">"Number of stork pairs in Baden-Württemberg"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10"></a>      <span class="at">title =</span> <span class="st">"Correlation between the decrease in stork pairs and the decrease in births in Baden-Württemberg"</span>) <span class="co">#labs(x = "Zahl der Lebendgeborenen in Baden-Württemberg", y = "Zahl der Storchenpaare in Baden-Württemberg", title = "Korrelation zwischen dem Rückgang der Storchenpopulation und der Abnahme der Geburtenzahl in Baden-Württemberg") </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Warning: The following aesthetics were dropped during statistical transformation: label
+#&gt; ℹ This can happen when ggplot fails to infer the correct grouping structure in
+#&gt;   the data.
+#&gt; ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+#&gt;   variable into a factor?</code></pre>
 </div>
-<div class="callout-body-container callout-body">
-<p>You can delete everything in here and start fresh.</p>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="04_causality_files/figure-html/unnamed-chunk-1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="04_causality_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
 </div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -542,6 +626,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","loop":true,"descPosition":"bottom","closeEffect":"zoom"});</script>
 
 
 

@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -63,6 +97,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 </head>
@@ -153,7 +190,13 @@ ul.task-list li input[type="checkbox"] {
    
   <ul class="collapse">
   <li><a href="#assignment-1" id="toc-assignment-1" class="nav-link active" data-scroll-target="#assignment-1"><span class="header-section-number">1</span> Assignment 1</a></li>
-  <li><a href="#assignment-2" id="toc-assignment-2" class="nav-link" data-scroll-target="#assignment-2"><span class="header-section-number">2</span> Assignment 2</a></li>
+  <li><a href="#assignment-2" id="toc-assignment-2" class="nav-link" data-scroll-target="#assignment-2"><span class="header-section-number">2</span> Assignment 2</a>
+  <ul class="collapse">
+  <li><a href="#percentage-of-customers-using-all-three-devices" id="toc-percentage-of-customers-using-all-three-devices" class="nav-link" data-scroll-target="#percentage-of-customers-using-all-three-devices"><span class="header-section-number">2.1</span> Percentage of customers using ALL three devices</a></li>
+  <li><a href="#percentage-of-customers-using-at-least-two-devices" id="toc-percentage-of-customers-using-at-least-two-devices" class="nav-link" data-scroll-target="#percentage-of-customers-using-at-least-two-devices"><span class="header-section-number">2.2</span> Percentage of customers using AT LEAST two devices</a></li>
+  <li><a href="#percentage-of-customers-using-only-one-device" id="toc-percentage-of-customers-using-only-one-device" class="nav-link" data-scroll-target="#percentage-of-customers-using-only-one-device"><span class="header-section-number">2.3</span> Percentage of customers using ONLY one device</a></li>
+  <li><a href="#check-total-probability-has-to-be-1" id="toc-check-total-probability-has-to-be-1" class="nav-link" data-scroll-target="#check-total-probability-has-to-be-1"><span class="header-section-number">2.4</span> Check total probability (has to be 1)</a></li>
+  </ul></li>
   <li><a href="#assignment-3" id="toc-assignment-3" class="nav-link" data-scroll-target="#assignment-3"><span class="header-section-number">3</span> Assignment 3</a></li>
   </ul>
 </nav>
@@ -186,68 +229,106 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="assignment-1" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Assignment 1</h1>
-<pre><code>P_S&lt;-0.3
-P_notS&lt;-0.7
-
-P_T_after_S&lt;-0.2
-P_notT_after_S&lt;-0.8
-P_T_after_notS&lt;-0.6
-P_notT_after_notS&lt;-0.4
-
-P_T_and_S&lt;-P_T_after_S*P_S
-P_T_and_S
-P_notT_and_S&lt;-P_notT_after_S*P_S
-P_notT_and_S
-P_T_and_notS&lt;-P_T_after_notS*P_notS
-P_T_and_notS
-P_notT_and_notS&lt;-P_notT_after_notS*P_notS
-P_notT_and_notS</code></pre>
+<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-1_964df8552d61211bccca1177a8fe6118">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>P_S<span class="ot">&lt;-</span><span class="fl">0.3</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>P_notS<span class="ot">&lt;-</span><span class="fl">0.7</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a>P_T_after_S<span class="ot">&lt;-</span><span class="fl">0.2</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>P_notT_after_S<span class="ot">&lt;-</span><span class="fl">0.8</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>P_T_after_notS<span class="ot">&lt;-</span><span class="fl">0.6</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>P_notT_after_notS<span class="ot">&lt;-</span><span class="fl">0.4</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a>P_T_and_S<span class="ot">&lt;-</span>P_T_after_S<span class="sc">*</span>P_S</span>
+<span id="cb1-10"><a href="#cb1-10"></a>P_notT_and_S<span class="ot">&lt;-</span>P_notT_after_S<span class="sc">*</span>P_S</span>
+<span id="cb1-11"><a href="#cb1-11"></a>P_T_and_notS<span class="ot">&lt;-</span>P_T_after_notS<span class="sc">*</span>P_notS</span>
+<span id="cb1-12"><a href="#cb1-12"></a>P_notT_and_notS<span class="ot">&lt;-</span>P_notT_after_notS<span class="sc">*</span>P_notS</span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="fu">sprintf</span>(<span class="st">"P(T and S) = %.3f; P(T and notS) = %.3f; P(notT and S) = %.3f; P(notT and notS) = %.3f; Sum = %.3f"</span>, P_T_and_S, P_T_and_notS, P_notT_and_S, P_notT_and_notS, P_T_and_S<span class="sc">+</span>P_T_and_notS<span class="sc">+</span>P_notT_and_S<span class="sc">+</span>P_notT_and_notS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "P(T and S) = 0.060; P(T and notS) = 0.420; P(notT and S) = 0.240; P(notT and notS) = 0.280; Sum = 1.000"</code></pre>
+</div>
+</div>
 </section>
 <section id="assignment-2" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Assignment 2</h1>
-<pre><code>P_S_notT_notC&lt;-0.423
-P_T_notS_notC&lt;-0.278
-P_C_notT_notS&lt;-0.1
-
-P_SandT_notSandTandC&lt;-0.073
-P_TandC_notSandTandC&lt;-0.033
-P_SandC_notSandTandC&lt;-0.088
-
-P_SandTandC&lt;-0.005
-  
-## Percentage of customers using ALL three devices
-P_allDevices&lt;-P_SandTandC
-P_allDevices
-
-## Percentage of customers using AT LEAST two devices
-P_atLeastTwoDevices&lt;-P_SandT_notSandTandC+P_TandC_notSandTandC+P_SandC_notSandTandC+P_SandTandC
-P_atLeastTwoDevices
-
-## Percentage of customers using ONLY one device
-P_onlyOneDevice&lt;-P_S_notT_notC+P_T_notS_notC+P_C_notT_notS
-P_onlyOneDevice
-
-## Check total probability (has to be 1)
-P_total&lt;-P_atLeastTwoDevices+P_onlyOneDevice
-P_total</code></pre>
+<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-2_2d9644f54787fd745d7d72c1d8936846">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>P_S_notT_notC<span class="ot">&lt;-</span><span class="fl">0.423</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>P_T_notS_notC<span class="ot">&lt;-</span><span class="fl">0.278</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>P_C_notT_notS<span class="ot">&lt;-</span><span class="fl">0.1</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>P_SandT_notSandTandC<span class="ot">&lt;-</span><span class="fl">0.073</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>P_TandC_notSandTandC<span class="ot">&lt;-</span><span class="fl">0.033</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>P_SandC_notSandTandC<span class="ot">&lt;-</span><span class="fl">0.088</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>P_SandTandC<span class="ot">&lt;-</span><span class="fl">0.005</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="percentage-of-customers-using-all-three-devices" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="percentage-of-customers-using-all-three-devices"><span class="header-section-number">2.1</span> Percentage of customers using ALL three devices</h2>
+<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-3_ed1a5a98ab9c6a85a707e6ef8a025786">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>P_allDevices<span class="ot">&lt;-</span>P_SandTandC</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">sprintf</span>(<span class="st">"Percentage of customers using all three devices: %.3f"</span>,P_allDevices)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "Percentage of customers using all three devices: 0.005"</code></pre>
+</div>
+</div>
+</section>
+<section id="percentage-of-customers-using-at-least-two-devices" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="percentage-of-customers-using-at-least-two-devices"><span class="header-section-number">2.2</span> Percentage of customers using AT LEAST two devices</h2>
+<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-4_eb7341b486e5dc6d3cd0ff799e0eeff6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>P_atLeastTwoDevices<span class="ot">&lt;-</span>P_SandT_notSandTandC<span class="sc">+</span>P_TandC_notSandTandC<span class="sc">+</span>P_SandC_notSandTandC<span class="sc">+</span>P_SandTandC</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">sprintf</span>(<span class="st">"Percentage of customers using at least two devices: %.3f"</span>, P_atLeastTwoDevices)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "Percentage of customers using at least two devices: 0.199"</code></pre>
+</div>
+</div>
+</section>
+<section id="percentage-of-customers-using-only-one-device" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="percentage-of-customers-using-only-one-device"><span class="header-section-number">2.3</span> Percentage of customers using ONLY one device</h2>
+<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-5_49d49cf142e0c2715c1ef4c852bc8cf8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>P_onlyOneDevice<span class="ot">&lt;-</span>P_S_notT_notC<span class="sc">+</span>P_T_notS_notC<span class="sc">+</span>P_C_notT_notS</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">sprintf</span>(<span class="st">"Percentage of customers using only one device: %.3f"</span>, P_onlyOneDevice)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "Percentage of customers using only one device: 0.801"</code></pre>
+</div>
+</div>
+</section>
+<section id="check-total-probability-has-to-be-1" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="check-total-probability-has-to-be-1"><span class="header-section-number">2.4</span> Check total probability (has to be 1)</h2>
+<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-6_dffb9ac58a47bb26258bd222facc4f07">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>P_total<span class="ot">&lt;-</span>P_atLeastTwoDevices<span class="sc">+</span>P_onlyOneDevice</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">sprintf</span>(<span class="st">"Total probability: %.3f"</span>, P_total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "Total probability: 1.000"</code></pre>
+</div>
+</div>
+</section>
 </section>
 <section id="assignment-3" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Assignment 3</h1>
-<pre><code>P_B_after_A&lt;-0.97
-P_B_after_notA&lt;-0.01
-P_A&lt;-0.04
-
-P_notA&lt;-1-P_A
-
-P_notA_after_B&lt;-(P_B_after_notA*P_notA/(P_B_after_notA*P_notA+P_B_after_A*P_A))
-P_notA_after_B
-
-P_A_after_B&lt;-(P_B_after_A*P_A/(P_B_after_A*P_A+P_B_after_notA*P_notA))
-P_A_after_B
-
-Answer_vect&lt;-c("These results show that in case the alarm is triggered, there is a possibility of about ", round(P_notA_after_B*100,digits=1), "% that the product is flawless and a probability of ", round(P_A_after_B*100,digits=1), "% that the product is faulty.")
-Answer&lt;-paste(Answer_vect,collapse="")
-Answer</code></pre>
+<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-7_2c0f267adf71d99f9e86fb77757743e1">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>P_B_after_A<span class="ot">&lt;-</span><span class="fl">0.97</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>P_B_after_notA<span class="ot">&lt;-</span><span class="fl">0.01</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>P_A<span class="ot">&lt;-</span><span class="fl">0.04</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a>P_notA<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">-</span>P_A</span>
+<span id="cb12-6"><a href="#cb12-6"></a></span>
+<span id="cb12-7"><a href="#cb12-7"></a>P_notA_after_B<span class="ot">&lt;-</span>(P_B_after_notA<span class="sc">*</span>P_notA<span class="sc">/</span>(P_B_after_notA<span class="sc">*</span>P_notA<span class="sc">+</span>P_B_after_A<span class="sc">*</span>P_A))</span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="fu">sprintf</span>(<span class="st">"P(notA|B) = %.3f"</span>, P_notA_after_B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "P(notA|B) = 0.198"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>P_A_after_B<span class="ot">&lt;-</span>(P_B_after_A<span class="sc">*</span>P_A<span class="sc">/</span>(P_B_after_A<span class="sc">*</span>P_A<span class="sc">+</span>P_B_after_notA<span class="sc">*</span>P_notA))</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">sprintf</span>(<span class="st">"P(A|B) = %.3f"</span>, P_A_after_B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "P(A|B) = 0.802"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>Answer_vect<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"These results show that in case the alarm is triggered, there is a possibility of about "</span>, <span class="fu">round</span>(P_notA_after_B<span class="sc">*</span><span class="dv">100</span>,<span class="at">digits=</span><span class="dv">1</span>), <span class="st">"% that the product is flawless and a probability of "</span>, <span class="fu">round</span>(P_A_after_B<span class="sc">*</span><span class="dv">100</span>,<span class="at">digits=</span><span class="dv">1</span>), <span class="st">"% that the product is faulty."</span>)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>Answer<span class="ot">&lt;-</span><span class="fu">paste</span>(Answer_vect,<span class="at">collapse=</span><span class="st">""</span>)</span>
+<span id="cb16-3"><a href="#cb16-3"></a>Answer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "These results show that in case the alarm is triggered, there is a possibility of about 19.8% that the product is flawless and a probability of 80.2% that the product is faulty."</code></pre>
+</div>
+</div>
 
 
 </section>
