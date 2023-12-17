@@ -232,96 +232,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="load-packages" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Load packages</h1>
-<div class="cell" data-hash="06_rct_cache/html/unnamed-chunk-1_72b4fe388a9e9a268514441046bcb5ae">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#&gt; ✔ dplyr     1.1.4     ✔ readr     2.1.4
-#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.1
-#&gt; ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-#&gt; ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
-#&gt; ✔ purrr     1.0.2     
-#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-#&gt; ✖ dplyr::filter() masks stats::filter()
-#&gt; ✖ dplyr::lag()    masks stats::lag()
-#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(dagitty)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">library</span>(ggdag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; 
-#&gt; Attache Paket: 'ggdag'
-#&gt; 
-#&gt; Das folgende Objekt ist maskiert 'package:stats':
-#&gt; 
-#&gt;     filter</code></pre>
-</div>
+<div class="cell" data-hash="06_rct_cache/html/unnamed-chunk-1_1bf192d1d71708605d4b6cda3cdd4e95">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(ggdag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-data" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Load data</h1>
 <div class="cell" data-hash="06_rct_cache/html/unnamed-chunk-2_daa4e144a4bc6f9b619c801d4740efee">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">setwd</span>(<span class="st">"D:/CausalDataScience/cdsba-LukasB2324/content/01_journal"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2"></a>abtest_data<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"Data/abtest_online.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">setwd</span>(<span class="st">"D:/CausalDataScience/cdsba-LukasB2324/content/01_journal"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>abtest_data<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"Data/abtest_online.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="assignment-1" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Assignment 1</h1>
 <div class="cell" data-hash="06_rct_cache/html/unnamed-chunk-3_bb338d51e854506b2d4dd0a93bd9e932">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>abtest_data_mod<span class="ot">&lt;-</span>abtest_data</span>
-<span id="cb6-2"><a href="#cb6-2"></a>abtest_data_mod[<span class="st">"mobile_device"</span>]<span class="ot">&lt;-</span>abtest_data_mod[<span class="st">"mobile_device"</span>]<span class="sc">*</span><span class="dv">1</span> <span class="co"># convert logical values to numeric vauels 0 and 1</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a>abtest_data_mod[<span class="st">"chatbot"</span>]<span class="ot">&lt;-</span>abtest_data_mod[<span class="st">"chatbot"</span>]<span class="sc">*</span><span class="dv">1</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>abtest_data_mod<span class="ot">&lt;-</span>abtest_data_mod[,<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>]<span class="co"># exclude ip adress</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a></span>
-<span id="cb6-6"><a href="#cb6-6"></a>compare_previousVisit <span class="ot">&lt;-</span> </span>
-<span id="cb6-7"><a href="#cb6-7"></a>  <span class="fu">ggplot</span>(abtest_data, </span>
-<span id="cb6-8"><a href="#cb6-8"></a>         <span class="fu">aes</span>(<span class="at">x =</span> chatbot, </span>
-<span id="cb6-9"><a href="#cb6-9"></a>             <span class="at">y =</span> previous_visit, </span>
-<span id="cb6-10"><a href="#cb6-10"></a>             <span class="at">color =</span> <span class="fu">as.factor</span>(chatbot))) <span class="sc">+</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, </span>
-<span id="cb6-12"><a href="#cb6-12"></a>               <span class="at">width =</span> .<span class="dv">5</span>,</span>
-<span id="cb6-13"><a href="#cb6-13"></a>               <span class="at">fun.data =</span> <span class="st">"mean_se"</span>, </span>
-<span id="cb6-14"><a href="#cb6-14"></a>               <span class="at">fun.args =</span> <span class="fu">list</span>(<span class="at">mult=</span><span class="fl">1.96</span>),</span>
-<span id="cb6-15"><a href="#cb6-15"></a>               <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"chatbot"</span>, <span class="at">y =</span> <span class="st">"previous_visit"</span>, <span class="at">title =</span> <span class="st">"Number of previous visits"</span>)</span>
-<span id="cb6-17"><a href="#cb6-17"></a></span>
-<span id="cb6-18"><a href="#cb6-18"></a>compare_mobileDevice <span class="ot">&lt;-</span> </span>
-<span id="cb6-19"><a href="#cb6-19"></a>  <span class="fu">ggplot</span>(abtest_data_mod, </span>
-<span id="cb6-20"><a href="#cb6-20"></a>         <span class="fu">aes</span>(<span class="at">x =</span> chatbot, </span>
-<span id="cb6-21"><a href="#cb6-21"></a>             <span class="at">y =</span> mobile_device, </span>
-<span id="cb6-22"><a href="#cb6-22"></a>             <span class="at">color =</span> <span class="fu">as.factor</span>(chatbot))) <span class="sc">+</span></span>
-<span id="cb6-23"><a href="#cb6-23"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, </span>
-<span id="cb6-24"><a href="#cb6-24"></a>               <span class="at">width =</span> .<span class="dv">5</span>,</span>
-<span id="cb6-25"><a href="#cb6-25"></a>               <span class="at">fun.data =</span> <span class="st">"mean_se"</span>, </span>
-<span id="cb6-26"><a href="#cb6-26"></a>               <span class="at">fun.args =</span> <span class="fu">list</span>(<span class="at">mult=</span><span class="fl">1.96</span>),</span>
-<span id="cb6-27"><a href="#cb6-27"></a>               <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb6-28"><a href="#cb6-28"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"chatbot"</span>, <span class="at">y =</span> <span class="st">"mobile_device"</span>, <span class="at">title =</span> <span class="st">"Number of users of a mobile device"</span>)</span>
-<span id="cb6-29"><a href="#cb6-29"></a></span>
-<span id="cb6-30"><a href="#cb6-30"></a>compare_purchase <span class="ot">&lt;-</span> </span>
-<span id="cb6-31"><a href="#cb6-31"></a>  <span class="fu">ggplot</span>(abtest_data, </span>
-<span id="cb6-32"><a href="#cb6-32"></a>         <span class="fu">aes</span>(<span class="at">x =</span> chatbot, </span>
-<span id="cb6-33"><a href="#cb6-33"></a>             <span class="at">y =</span> purchase, </span>
-<span id="cb6-34"><a href="#cb6-34"></a>             <span class="at">color =</span> <span class="fu">as.factor</span>(chatbot))) <span class="sc">+</span></span>
-<span id="cb6-35"><a href="#cb6-35"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, </span>
-<span id="cb6-36"><a href="#cb6-36"></a>               <span class="at">width =</span> .<span class="dv">5</span>,</span>
-<span id="cb6-37"><a href="#cb6-37"></a>               <span class="at">fun.data =</span> <span class="st">"mean_se"</span>, </span>
-<span id="cb6-38"><a href="#cb6-38"></a>               <span class="at">fun.args =</span> <span class="fu">list</span>(<span class="at">mult=</span><span class="fl">1.96</span>),</span>
-<span id="cb6-39"><a href="#cb6-39"></a>               <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb6-40"><a href="#cb6-40"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"chatbot"</span>, <span class="at">y =</span> <span class="st">"purchase"</span>, <span class="at">title =</span> <span class="st">"Number of customers who purchase"</span>)</span>
-<span id="cb6-41"><a href="#cb6-41"></a></span>
-<span id="cb6-42"><a href="#cb6-42"></a>compare_purchase_amount <span class="ot">&lt;-</span> </span>
-<span id="cb6-43"><a href="#cb6-43"></a>  <span class="fu">ggplot</span>(abtest_data, </span>
-<span id="cb6-44"><a href="#cb6-44"></a>         <span class="fu">aes</span>(<span class="at">x =</span> chatbot, </span>
-<span id="cb6-45"><a href="#cb6-45"></a>             <span class="at">y =</span> purchase_amount, </span>
-<span id="cb6-46"><a href="#cb6-46"></a>             <span class="at">color =</span> <span class="fu">as.factor</span>(chatbot))) <span class="sc">+</span></span>
-<span id="cb6-47"><a href="#cb6-47"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, </span>
-<span id="cb6-48"><a href="#cb6-48"></a>               <span class="at">width =</span> .<span class="dv">5</span>,</span>
-<span id="cb6-49"><a href="#cb6-49"></a>               <span class="at">fun.data =</span> <span class="st">"mean_se"</span>, </span>
-<span id="cb6-50"><a href="#cb6-50"></a>               <span class="at">fun.args =</span> <span class="fu">list</span>(<span class="at">mult=</span><span class="fl">1.96</span>),</span>
-<span id="cb6-51"><a href="#cb6-51"></a>               <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb6-52"><a href="#cb6-52"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"chatbot"</span>, <span class="at">y =</span> <span class="st">"purchase_amount"</span>, <span class="at">title =</span> <span class="st">"Purchase amount"</span>)</span>
-<span id="cb6-53"><a href="#cb6-53"></a></span>
-<span id="cb6-54"><a href="#cb6-54"></a>compare_previousVisit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>abtest_data_mod<span class="ot">&lt;-</span>abtest_data</span>
+<span id="cb3-2"><a href="#cb3-2"></a>abtest_data_mod[<span class="st">"mobile_device"</span>]<span class="ot">&lt;-</span>abtest_data_mod[<span class="st">"mobile_device"</span>]<span class="sc">*</span><span class="dv">1</span> <span class="co"># convert logical values to numeric vauels 0 and 1</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>abtest_data_mod[<span class="st">"chatbot"</span>]<span class="ot">&lt;-</span>abtest_data_mod[<span class="st">"chatbot"</span>]<span class="sc">*</span><span class="dv">1</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>abtest_data_mod<span class="ot">&lt;-</span>abtest_data_mod[,<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>]<span class="co"># exclude ip adress</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a>compare_previousVisit <span class="ot">&lt;-</span> </span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="fu">ggplot</span>(abtest_data, </span>
+<span id="cb3-8"><a href="#cb3-8"></a>         <span class="fu">aes</span>(<span class="at">x =</span> chatbot, </span>
+<span id="cb3-9"><a href="#cb3-9"></a>             <span class="at">y =</span> previous_visit, </span>
+<span id="cb3-10"><a href="#cb3-10"></a>             <span class="at">color =</span> <span class="fu">as.factor</span>(chatbot))) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, </span>
+<span id="cb3-12"><a href="#cb3-12"></a>               <span class="at">width =</span> .<span class="dv">5</span>,</span>
+<span id="cb3-13"><a href="#cb3-13"></a>               <span class="at">fun.data =</span> <span class="st">"mean_se"</span>, </span>
+<span id="cb3-14"><a href="#cb3-14"></a>               <span class="at">fun.args =</span> <span class="fu">list</span>(<span class="at">mult=</span><span class="fl">1.96</span>),</span>
+<span id="cb3-15"><a href="#cb3-15"></a>               <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"chatbot"</span>, <span class="at">y =</span> <span class="st">"previous_visit"</span>, <span class="at">title =</span> <span class="st">"Number of previous visits"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17"></a></span>
+<span id="cb3-18"><a href="#cb3-18"></a>compare_mobileDevice <span class="ot">&lt;-</span> </span>
+<span id="cb3-19"><a href="#cb3-19"></a>  <span class="fu">ggplot</span>(abtest_data_mod, </span>
+<span id="cb3-20"><a href="#cb3-20"></a>         <span class="fu">aes</span>(<span class="at">x =</span> chatbot, </span>
+<span id="cb3-21"><a href="#cb3-21"></a>             <span class="at">y =</span> mobile_device, </span>
+<span id="cb3-22"><a href="#cb3-22"></a>             <span class="at">color =</span> <span class="fu">as.factor</span>(chatbot))) <span class="sc">+</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, </span>
+<span id="cb3-24"><a href="#cb3-24"></a>               <span class="at">width =</span> .<span class="dv">5</span>,</span>
+<span id="cb3-25"><a href="#cb3-25"></a>               <span class="at">fun.data =</span> <span class="st">"mean_se"</span>, </span>
+<span id="cb3-26"><a href="#cb3-26"></a>               <span class="at">fun.args =</span> <span class="fu">list</span>(<span class="at">mult=</span><span class="fl">1.96</span>),</span>
+<span id="cb3-27"><a href="#cb3-27"></a>               <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"chatbot"</span>, <span class="at">y =</span> <span class="st">"mobile_device"</span>, <span class="at">title =</span> <span class="st">"Number of users of a mobile device"</span>)</span>
+<span id="cb3-29"><a href="#cb3-29"></a></span>
+<span id="cb3-30"><a href="#cb3-30"></a>compare_purchase <span class="ot">&lt;-</span> </span>
+<span id="cb3-31"><a href="#cb3-31"></a>  <span class="fu">ggplot</span>(abtest_data, </span>
+<span id="cb3-32"><a href="#cb3-32"></a>         <span class="fu">aes</span>(<span class="at">x =</span> chatbot, </span>
+<span id="cb3-33"><a href="#cb3-33"></a>             <span class="at">y =</span> purchase, </span>
+<span id="cb3-34"><a href="#cb3-34"></a>             <span class="at">color =</span> <span class="fu">as.factor</span>(chatbot))) <span class="sc">+</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, </span>
+<span id="cb3-36"><a href="#cb3-36"></a>               <span class="at">width =</span> .<span class="dv">5</span>,</span>
+<span id="cb3-37"><a href="#cb3-37"></a>               <span class="at">fun.data =</span> <span class="st">"mean_se"</span>, </span>
+<span id="cb3-38"><a href="#cb3-38"></a>               <span class="at">fun.args =</span> <span class="fu">list</span>(<span class="at">mult=</span><span class="fl">1.96</span>),</span>
+<span id="cb3-39"><a href="#cb3-39"></a>               <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb3-40"><a href="#cb3-40"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"chatbot"</span>, <span class="at">y =</span> <span class="st">"purchase"</span>, <span class="at">title =</span> <span class="st">"Number of customers who purchase"</span>)</span>
+<span id="cb3-41"><a href="#cb3-41"></a></span>
+<span id="cb3-42"><a href="#cb3-42"></a>compare_purchase_amount <span class="ot">&lt;-</span> </span>
+<span id="cb3-43"><a href="#cb3-43"></a>  <span class="fu">ggplot</span>(abtest_data, </span>
+<span id="cb3-44"><a href="#cb3-44"></a>         <span class="fu">aes</span>(<span class="at">x =</span> chatbot, </span>
+<span id="cb3-45"><a href="#cb3-45"></a>             <span class="at">y =</span> purchase_amount, </span>
+<span id="cb3-46"><a href="#cb3-46"></a>             <span class="at">color =</span> <span class="fu">as.factor</span>(chatbot))) <span class="sc">+</span></span>
+<span id="cb3-47"><a href="#cb3-47"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"errorbar"</span>, </span>
+<span id="cb3-48"><a href="#cb3-48"></a>               <span class="at">width =</span> .<span class="dv">5</span>,</span>
+<span id="cb3-49"><a href="#cb3-49"></a>               <span class="at">fun.data =</span> <span class="st">"mean_se"</span>, </span>
+<span id="cb3-50"><a href="#cb3-50"></a>               <span class="at">fun.args =</span> <span class="fu">list</span>(<span class="at">mult=</span><span class="fl">1.96</span>),</span>
+<span id="cb3-51"><a href="#cb3-51"></a>               <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb3-52"><a href="#cb3-52"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"chatbot"</span>, <span class="at">y =</span> <span class="st">"purchase_amount"</span>, <span class="at">title =</span> <span class="st">"Purchase amount"</span>)</span>
+<span id="cb3-53"><a href="#cb3-53"></a></span>
+<span id="cb3-54"><a href="#cb3-54"></a>compare_previousVisit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -329,7 +309,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>compare_mobileDevice</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>compare_mobileDevice</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -337,7 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>compare_purchase</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>compare_purchase</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -345,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>compare_purchase_amount</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>compare_purchase_amount</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -359,8 +339,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="assignment-2" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Assignment 2</h1>
 <div class="cell" data-hash="06_rct_cache/html/unnamed-chunk-4_7ffae71919ae3c4786c47feaf4824e0f">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>lm_2<span class="ot">&lt;-</span><span class="fu">lm</span>(purchase_amount<span class="sc">~</span>previous_visit<span class="sc">+</span>mobile_device<span class="sc">+</span>chatbot,abtest_data_mod)</span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">summary</span>(lm_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>lm_2<span class="ot">&lt;-</span><span class="fu">lm</span>(purchase_amount<span class="sc">~</span>previous_visit<span class="sc">+</span>mobile_device<span class="sc">+</span>chatbot,abtest_data_mod)</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">summary</span>(lm_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:
@@ -392,8 +372,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="include-interaction-for-subgroup-mobile-users" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="include-interaction-for-subgroup-mobile-users"><span class="header-section-number">5.1</span> Include interaction for subgroup mobile users</h2>
 <div class="cell" data-hash="06_rct_cache/html/unnamed-chunk-5_652330b99d4bbf48a6c720107e37d6c7">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>lm_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(purchase_amount <span class="sc">~</span> chatbot <span class="sc">*</span> mobile_device, abtest_data_mod)</span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">summary</span>(lm_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>lm_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(purchase_amount <span class="sc">~</span> chatbot <span class="sc">*</span> mobile_device, abtest_data_mod)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">summary</span>(lm_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:
@@ -423,8 +403,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="assignment-4" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Assignment 4</h1>
 <div class="cell" data-hash="06_rct_cache/html/unnamed-chunk-6_761dc6325eb853bee0af114b470918f4">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>lm_4<span class="ot">&lt;-</span><span class="fu">glm</span>(purchase<span class="sc">~</span>chatbot, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">'logit'</span>), <span class="at">data=</span>abtest_data_mod)</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">summary</span>(lm_4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>lm_4<span class="ot">&lt;-</span><span class="fu">glm</span>(purchase<span class="sc">~</span>chatbot, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">'logit'</span>), <span class="at">data=</span>abtest_data_mod)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">summary</span>(lm_4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:
@@ -446,11 +426,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #&gt; 
 #&gt; Number of Fisher Scoring iterations: 4</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>log_coefficient_chatbot<span class="ot">&lt;-</span>lm_4[[<span class="st">"coefficients"</span>]][[<span class="st">"chatbot"</span>]]</span>
-<span id="cb16-2"><a href="#cb16-2"></a>odds_ratio_chatbot<span class="ot">&lt;-</span><span class="fu">exp</span>(log_coefficient_chatbot)</span>
-<span id="cb16-3"><a href="#cb16-3"></a>Answer4<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"The chatbot reduces the chance of a website visitor actually purchasing by "</span>,<span class="fu">round</span>((<span class="dv">1</span><span class="sc">-</span>odds_ratio_chatbot)<span class="sc">*</span><span class="dv">100</span>,<span class="dv">1</span>),<span class="st">"%. It seems that the chatbot annoys the customers."</span>)</span>
-<span id="cb16-4"><a href="#cb16-4"></a>Answer4<span class="ot">&lt;-</span><span class="fu">paste</span>(Answer4,<span class="at">collapse=</span><span class="st">""</span>)</span>
-<span id="cb16-5"><a href="#cb16-5"></a>Answer4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>log_coefficient_chatbot<span class="ot">&lt;-</span>lm_4[[<span class="st">"coefficients"</span>]][[<span class="st">"chatbot"</span>]]</span>
+<span id="cb13-2"><a href="#cb13-2"></a>odds_ratio_chatbot<span class="ot">&lt;-</span><span class="fu">exp</span>(log_coefficient_chatbot)</span>
+<span id="cb13-3"><a href="#cb13-3"></a>Answer4<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"The chatbot reduces the chance of a website visitor actually purchasing by "</span>,<span class="fu">round</span>((<span class="dv">1</span><span class="sc">-</span>odds_ratio_chatbot)<span class="sc">*</span><span class="dv">100</span>,<span class="dv">1</span>),<span class="st">"%. It seems that the chatbot annoys the customers."</span>)</span>
+<span id="cb13-4"><a href="#cb13-4"></a>Answer4<span class="ot">&lt;-</span><span class="fu">paste</span>(Answer4,<span class="at">collapse=</span><span class="st">""</span>)</span>
+<span id="cb13-5"><a href="#cb13-5"></a>Answer4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "The chatbot reduces the chance of a website visitor actually purchasing by 62.8%. It seems that the chatbot annoys the customers."</code></pre>
 </div>
@@ -809,7 +789,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"selector":".lightbox","openEffect":"zoom"});</script>
+<script>var lightboxQuarto = GLightbox({"loop":true,"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom"});</script>
 
 
 
