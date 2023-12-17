@@ -4,6 +4,7 @@ title: "Regression and Statistical Inference"
 
 # Load tidyerse package and data
 ```{r}
+#| warning: false
 library(tidyverse)
 setwd("D:/CausalDataScience/cdsba-LukasB2324/content/01_journal")
 car_prices<-readRDS("Data/car_prices.rds")

@@ -4,9 +4,10 @@ title: "Directed Acyclic Graphs"
 
 # Load packages
 ```{r}
-#library(tidyverse)
-#library(dagitty)
-#library(ggdag)
+#| warning: false
+library(tidyverse)
+library(dagitty)
+library(ggdag)
 
 setwd("D:/CausalDataScience/cdsba-LukasB2324/content/01_journal")
 ```

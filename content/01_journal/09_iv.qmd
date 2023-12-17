@@ -5,6 +5,7 @@ title: "Instrumental Variables"
 
 # Load packages
 ```{r}
+#| warning: false
 library(tidyverse)
 library(dagitty)
 library(ggdag)

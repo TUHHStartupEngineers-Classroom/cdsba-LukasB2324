@@ -228,64 +228,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="load-packages" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Load packages</h1>
-<div class="cell" data-hash="10_rdd_cache/html/unnamed-chunk-1_86e5fd6160a19779bb5e1366301f64d3">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#&gt; ✔ dplyr     1.1.4     ✔ readr     2.1.4
-#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.1
-#&gt; ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-#&gt; ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
-#&gt; ✔ purrr     1.0.2     
-#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-#&gt; ✖ dplyr::filter() masks stats::filter()
-#&gt; ✖ dplyr::lag()    masks stats::lag()
-#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(dagitty)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">library</span>(ggdag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; 
-#&gt; Attache Paket: 'ggdag'
-#&gt; 
-#&gt; Das folgende Objekt ist maskiert 'package:stats':
-#&gt; 
-#&gt;     filter</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(MatchIt)</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">library</span>(estimatr)</span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">library</span>(rddensity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="10_rdd_cache/html/unnamed-chunk-1_1a9725cede7bb0f48b38e2540d29627f">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(ggdag)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(MatchIt)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(estimatr)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(rddensity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-data" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Load data</h1>
 <div class="cell" data-hash="10_rdd_cache/html/unnamed-chunk-2_8339b031b9d8e03278b8a0dba3571248">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">setwd</span>(<span class="st">"D:/CausalDataScience/cdsba-LukasB2324/content/01_journal"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2"></a>df<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"Data/coupon.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">setwd</span>(<span class="st">"D:/CausalDataScience/cdsba-LukasB2324/content/01_journal"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>df<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"Data/coupon.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="assignment-1" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Assignment 1</h1>
 <div class="cell" data-hash="10_rdd_cache/html/unnamed-chunk-3_b992789b6f7bec64f7a2136b6c53df27">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>c0 <span class="ot">&lt;-</span> <span class="dv">60</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>bw <span class="ot">&lt;-</span> c0 <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">5</span><span class="sc">/</span><span class="dv">2</span>) <span class="co"># half the bandwidth</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a>df_bw_below <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(days_since_last <span class="sc">&gt;=</span> bw[<span class="dv">1</span>] <span class="sc">&amp;</span> days_since_last <span class="sc">&lt;</span> c0)</span>
-<span id="cb7-5"><a href="#cb7-5"></a>df_bw_above <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(days_since_last <span class="sc">&gt;=</span> c0 <span class="sc">&amp;</span> days_since_last <span class="sc">&lt;=</span> bw[<span class="dv">2</span>])</span>
-<span id="cb7-6"><a href="#cb7-6"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a>df_bw <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df_bw_above, df_bw_below)</span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="fu">dim</span>(df_bw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>c0 <span class="ot">&lt;-</span> <span class="dv">60</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>bw <span class="ot">&lt;-</span> c0 <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">5</span><span class="sc">/</span><span class="dv">2</span>) <span class="co"># half the bandwidth</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>df_bw_below <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(days_since_last <span class="sc">&gt;=</span> bw[<span class="dv">1</span>] <span class="sc">&amp;</span> days_since_last <span class="sc">&lt;</span> c0)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>df_bw_above <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(days_since_last <span class="sc">&gt;=</span> c0 <span class="sc">&amp;</span> days_since_last <span class="sc">&lt;=</span> bw[<span class="dv">2</span>])</span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a>df_bw <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df_bw_above, df_bw_below)</span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="fu">dim</span>(df_bw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 181   4</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>model_bw_below <span class="ot">&lt;-</span> <span class="fu">lm</span>(purchase_after <span class="sc">~</span> days_since_last, df_bw_below)</span>
-<span id="cb9-2"><a href="#cb9-2"></a>model_bw_above <span class="ot">&lt;-</span> <span class="fu">lm</span>(purchase_after <span class="sc">~</span> days_since_last, df_bw_above)</span>
-<span id="cb9-3"><a href="#cb9-3"></a></span>
-<span id="cb9-4"><a href="#cb9-4"></a>y0 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_bw_below, <span class="fu">tibble</span>(<span class="at">days_since_last =</span> c0))</span>
-<span id="cb9-5"><a href="#cb9-5"></a>y1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_bw_above, <span class="fu">tibble</span>(<span class="at">days_since_last =</span> c0))</span>
-<span id="cb9-6"><a href="#cb9-6"></a></span>
-<span id="cb9-7"><a href="#cb9-7"></a>late <span class="ot">&lt;-</span> y1 <span class="sc">-</span> y0</span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="fu">sprintf</span>(<span class="st">"LATE with half the bandwidth: %.2f"</span>, late)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>model_bw_below <span class="ot">&lt;-</span> <span class="fu">lm</span>(purchase_after <span class="sc">~</span> days_since_last, df_bw_below)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>model_bw_above <span class="ot">&lt;-</span> <span class="fu">lm</span>(purchase_after <span class="sc">~</span> days_since_last, df_bw_above)</span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a>y0 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_bw_below, <span class="fu">tibble</span>(<span class="at">days_since_last =</span> c0))</span>
+<span id="cb5-5"><a href="#cb5-5"></a>y1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_bw_above, <span class="fu">tibble</span>(<span class="at">days_since_last =</span> c0))</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>late <span class="ot">&lt;-</span> y1 <span class="sc">-</span> y0</span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="fu">sprintf</span>(<span class="st">"LATE with half the bandwidth: %.2f"</span>, late)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "LATE with half the bandwidth: 7.36"</code></pre>
 </div>
@@ -294,29 +274,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="assignment-2" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Assignment 2</h1>
 <div class="cell" data-hash="10_rdd_cache/html/unnamed-chunk-4_121667dbe32765e561ada05f6d2e8ec9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>c0 <span class="ot">&lt;-</span> <span class="dv">60</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>bw <span class="ot">&lt;-</span> c0 <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span><span class="sc">*</span><span class="dv">2</span>, <span class="dv">5</span><span class="sc">*</span><span class="dv">2</span>) <span class="co"># double the bandwidth</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a></span>
-<span id="cb11-4"><a href="#cb11-4"></a>df_bw_below <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(days_since_last <span class="sc">&gt;=</span> bw[<span class="dv">1</span>] <span class="sc">&amp;</span> days_since_last <span class="sc">&lt;</span> c0)</span>
-<span id="cb11-5"><a href="#cb11-5"></a>df_bw_above <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(days_since_last <span class="sc">&gt;=</span> c0 <span class="sc">&amp;</span> days_since_last <span class="sc">&lt;=</span> bw[<span class="dv">2</span>])</span>
-<span id="cb11-6"><a href="#cb11-6"></a></span>
-<span id="cb11-7"><a href="#cb11-7"></a>df_bw <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df_bw_above, df_bw_below)</span>
-<span id="cb11-8"><a href="#cb11-8"></a><span class="fu">dim</span>(df_bw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>c0 <span class="ot">&lt;-</span> <span class="dv">60</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>bw <span class="ot">&lt;-</span> c0 <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span><span class="sc">*</span><span class="dv">2</span>, <span class="dv">5</span><span class="sc">*</span><span class="dv">2</span>) <span class="co"># double the bandwidth</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a>df_bw_below <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(days_since_last <span class="sc">&gt;=</span> bw[<span class="dv">1</span>] <span class="sc">&amp;</span> days_since_last <span class="sc">&lt;</span> c0)</span>
+<span id="cb7-5"><a href="#cb7-5"></a>df_bw_above <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(days_since_last <span class="sc">&gt;=</span> c0 <span class="sc">&amp;</span> days_since_last <span class="sc">&lt;=</span> bw[<span class="dv">2</span>])</span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a>df_bw <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df_bw_above, df_bw_below)</span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="fu">dim</span>(df_bw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 629   4</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>model_bw_below <span class="ot">&lt;-</span> <span class="fu">lm</span>(purchase_after <span class="sc">~</span> days_since_last, df_bw_below)</span>
-<span id="cb13-2"><a href="#cb13-2"></a>model_bw_above <span class="ot">&lt;-</span> <span class="fu">lm</span>(purchase_after <span class="sc">~</span> days_since_last, df_bw_above)</span>
-<span id="cb13-3"><a href="#cb13-3"></a></span>
-<span id="cb13-4"><a href="#cb13-4"></a>y0 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_bw_below, <span class="fu">tibble</span>(<span class="at">days_since_last =</span> c0))</span>
-<span id="cb13-5"><a href="#cb13-5"></a>y1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_bw_above, <span class="fu">tibble</span>(<span class="at">days_since_last =</span> c0))</span>
-<span id="cb13-6"><a href="#cb13-6"></a></span>
-<span id="cb13-7"><a href="#cb13-7"></a>late <span class="ot">&lt;-</span> y1 <span class="sc">-</span> y0</span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="fu">sprintf</span>(<span class="st">"LATE with double the bandwidth: %.2f"</span>, late)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>model_bw_below <span class="ot">&lt;-</span> <span class="fu">lm</span>(purchase_after <span class="sc">~</span> days_since_last, df_bw_below)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>model_bw_above <span class="ot">&lt;-</span> <span class="fu">lm</span>(purchase_after <span class="sc">~</span> days_since_last, df_bw_above)</span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a>y0 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_bw_below, <span class="fu">tibble</span>(<span class="at">days_since_last =</span> c0))</span>
+<span id="cb9-5"><a href="#cb9-5"></a>y1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_bw_above, <span class="fu">tibble</span>(<span class="at">days_since_last =</span> c0))</span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a>late <span class="ot">&lt;-</span> y1 <span class="sc">-</span> y0</span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="fu">sprintf</span>(<span class="st">"LATE with double the bandwidth: %.2f"</span>, late)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "LATE with double the bandwidth: 9.51"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">sprintf</span>(<span class="st">"Changing the bandwidth has a noticable influence on the LATE. Especially doubling the bandwidth increases the LATE a lot."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">sprintf</span>(<span class="st">"Changing the bandwidth has a noticable influence on the LATE. Especially doubling the bandwidth increases the LATE a lot."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "Changing the bandwidth has a noticable influence on the LATE. Especially doubling the bandwidth increases the LATE a lot."</code></pre>
 </div>
@@ -325,10 +305,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="assignment-3" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Assignment 3</h1>
 <div class="cell" data-hash="10_rdd_cache/html/unnamed-chunk-5_cf4d8618ede208d359e05fd2ed6b80ea">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>shipping_data<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"Data/shipping.rds"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2"></a>c0<span class="ot">=</span><span class="dv">30</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a>rddd <span class="ot">&lt;-</span> <span class="fu">rddensity</span>(shipping_data<span class="sc">$</span>purchase_amount, <span class="at">c =</span> c0)</span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="fu">summary</span>(rddd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>shipping_data<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"Data/shipping.rds"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2"></a>c0<span class="ot">=</span><span class="dv">30</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>rddd <span class="ot">&lt;-</span> <span class="fu">rddensity</span>(shipping_data<span class="sc">$</span>purchase_amount, <span class="at">c =</span> c0)</span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="fu">summary</span>(rddd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Manipulation testing using local polynomial density estimation.
@@ -370,7 +350,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #&gt; 2.348                     173     298    0.0000
 #&gt; 2.609                     191     331    0.0000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>rdd_plot <span class="ot">&lt;-</span> <span class="fu">rdplotdensity</span>(rddd, shipping_data<span class="sc">$</span>purchase_amount, <span class="at">plotN =</span> <span class="dv">1000</span>, <span class="at">xlabel=</span><span class="st">"purchase_amount"</span>, <span class="at">ylabel=</span><span class="st">"density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>rdd_plot <span class="ot">&lt;-</span> <span class="fu">rdplotdensity</span>(rddd, shipping_data<span class="sc">$</span>purchase_amount, <span class="at">plotN =</span> <span class="dv">1000</span>, <span class="at">xlabel=</span><span class="st">"purchase_amount"</span>, <span class="at">ylabel=</span><span class="st">"density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -734,7 +714,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":true,"selector":".lightbox","openEffect":"zoom"});</script>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":true,"descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom"});</script>
 
 
 

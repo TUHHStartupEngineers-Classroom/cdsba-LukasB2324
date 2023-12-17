@@ -4,6 +4,7 @@ title: "Matching and Subclassification"
 
 # Load packages
 ```{r}
+#| warning: false
 library(tidyverse)
 library(dagitty)
 library(ggdag)

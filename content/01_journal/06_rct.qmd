@@ -4,6 +4,7 @@ title: "Randomized Controlled Trials"
 
 # Load packages
 ```{r}
+#| warning: false
 library(tidyverse)
 library(dagitty)
 library(ggdag)

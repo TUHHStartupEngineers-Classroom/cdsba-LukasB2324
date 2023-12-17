@@ -4,6 +4,7 @@ title: "Difference-in-Differences"
 
 # Load packages
 ```{r}
+#| warning: false
 library(tidyverse)
 library(dagitty)
 library(ggdag)

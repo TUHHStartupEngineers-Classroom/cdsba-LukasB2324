@@ -4,6 +4,7 @@ title: "Statistical Concepts"
 
 # Load data
 ```{r}
+#| warning: false
 setwd("D:/CausalDataScience/cdsba-LukasB2324/content/01_journal")
 random_vars<-readRDS("Data/random_vars.rds")
 ```

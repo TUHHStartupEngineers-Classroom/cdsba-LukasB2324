@@ -7,6 +7,7 @@ title: "Causality"
 
 # The replication
 ```{r}
+#| warning: false
 library(tidyverse)
 
 data_birthrates<-data.frame(births=c(160,158,155,150,140,130,127,113,103,102,96)*1000,stork_pairs=c(67,68,47,52,42,34,32,26,22,19,15),year=c(1966,1965,1967,1968,1969,1970,1971,1972,1973,1974,1975))
